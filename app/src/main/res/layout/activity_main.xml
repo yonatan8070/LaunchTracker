@@ -6,6 +6,26 @@
   android:layout_height="match_parent"
   tools:context=".MainActivity" >
   
+  <androidx.cardview.widget.CardView
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_gravity="center"
+    app:cardCornerRadius="8dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_margin="8dp"
+    app:contentPadding="8dp"
+    app:cardElevation="24dp" >
+  
+    <TextView
+      android:id="@+id/info_text"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:text="Hello World!" />
+  </androidx.cardview.widget.CardView>
+  
   <Button
     android:id="@+id/button"
     android:layout_width="wrap_content"
@@ -20,10 +40,8 @@
     android:id="@+id/textView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="16dp"
     android:textColor="#000000"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
