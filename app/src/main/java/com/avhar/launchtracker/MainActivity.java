@@ -23,7 +23,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
   //  private TextView mTextViewResult;
@@ -70,18 +72,19 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Response received from " + url);
                 try {
                   // This is the object containing the JSON list with the launches
-                  JSONArray jsonArray = response.getJSONArray("results");
-                  for (int i = 0; i < jsonArray.length(); i++) {
-                    // This is one specific launch at index i
-                    JSONObject jsonLaunch = jsonArray.getJSONObject(i);
+                  JSONArray results = response.getJSONArray("results");
 
-                    String name = jsonLaunch.getString("name");
-                    String net = jsonLaunch.getString("net");
+                  for (int i = 0; i < results.length(); i++) {
+                    JSONObject jsonLaunch = results.getJSONObject(i);
+                    Launch launch = new Launch();
 
-                    Launch launch = new Launch(name, net);
-//                    System.out.println(launch.toString());
+                    launch.setName(jsonLaunch.getString("name"));
+//                    launch.setNet(new SimpleDateFormat(jsonLaunch.getString("net"), Locale.getDefault()));
+                    launch.setProvider(jsonLaunch.getJSONObject("launch_service_provider").getString("name"));
+                    launch.setLaunchType(jsonLaunch.getJSONObject("launch_service_provider").getString("type"));
+                    launch.setStatus(jsonLaunch.getJSONObject("status").getString("name"));
+
                     launches.add(launch);
-//                    mTextViewResult.append(name + " at " + net + "\n\n");
                   }
                 } catch (JSONException e) {
                   // This runs in case the JSON does not contain the correct keys
