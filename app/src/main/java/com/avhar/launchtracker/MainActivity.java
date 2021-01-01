@@ -1,15 +1,16 @@
 package com.avhar.launchtracker;
 // continue here: https://guides.codepath.com/android/Using-the-RecyclerView#binding-the-adapter-to-the-recyclerview
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
   //  private TextView mTextViewResult;
   private RequestQueue mQueue;
   ArrayList<Launch> launches;
+  LaunchAdapter adapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
-    RecyclerView rvLaunches = (RecyclerView) findViewById(R.id.mainScreenRecycler);
+    RecyclerView rvLaunches = (RecyclerView) findViewById(R.id.rvLaunches);
 
-    LaunchAdapter adapter = new LaunchAdapter(launches);
+    adapter = new LaunchAdapter(launches);
 
-    rvLaunches.setAdapter(adapter);
     rvLaunches.setLayoutManager(new LinearLayoutManager(this));
+    rvLaunches.setAdapter(adapter);
   }
 
   private void jsonParse() {
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
               // This runs where a response arrives from the server
               @Override
               public void onResponse(JSONObject response) {
+                System.out.println("Response received from " + url);
                 try {
                   // This is the object containing the JSON list with the launches
                   JSONArray jsonArray = response.getJSONArray("results");
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     String net = jsonLaunch.getString("net");
 
                     Launch launch = new Launch(name, net);
+//                    System.out.println(launch.toString());
                     launches.add(launch);
 //                    mTextViewResult.append(name + " at " + net + "\n\n");
                   }
@@ -83,12 +87,17 @@ public class MainActivity extends AppCompatActivity {
                   // This runs in case the JSON does not contain the correct keys
                   e.printStackTrace();
                 }
+
+                adapter.notifyDataSetChanged();
               }
             }, new Response.ErrorListener() {
       // This runs if an error is returned from the server
       @Override
       public void onErrorResponse(VolleyError error) {
         error.printStackTrace();
+        Toast toast = new Toast(getApplicationContext());
+        toast.setText("Error");
+        toast.show();
       }
     });
     mQueue.add(request);
