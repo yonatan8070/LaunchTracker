@@ -1,5 +1,6 @@
 package com.avhar.launchtracker;
 // continue here: https://guides.codepath.com/android/Using-the-RecyclerView#binding-the-adapter-to-the-recyclerview
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     Button buttonParse = findViewById(R.id.button);
 
     mQueue = Volley.newRequestQueue(this);
+    launches = new ArrayList<>();
     jsonParse();
 
     buttonParse.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     String net = jsonLaunch.getString("net");
 
                     Launch launch = new Launch(name, net);
-                    launches.set(i, launch);
-
+                    launches.add(launch);
 //                    mTextViewResult.append(name + " at " + net + "\n\n");
                   }
                 } catch (JSONException e) {

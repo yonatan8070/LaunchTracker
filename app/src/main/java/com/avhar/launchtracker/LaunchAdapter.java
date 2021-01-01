@@ -23,7 +23,7 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
     LayoutInflater inflater = LayoutInflater.from(context);
 
     // Inflate the custom layout
-    View launchView = inflater.inflate(R.layout.launch_card, parent, false);
+    View launchView = inflater.inflate(R.layout.launch_card, parent, true);
 
     // Return a new holder instance
     return new ViewHolder(launchView);
@@ -35,6 +35,7 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
     Launch launch = launches.get(position);
 
     // Set item views based on your views and data model
+    System.out.println("Set data to text modules");
     TextView nameView = holder.name;
     nameView.setText(launch.getName());
 
@@ -44,6 +45,9 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
 
   @Override
   public int getItemCount() {
+    if (launches == null) {
+      return 0;
+    }
     return launches.size();
   }
 
