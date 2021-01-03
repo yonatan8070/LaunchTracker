@@ -1,8 +1,6 @@
 package com.avhar.launchtracker;
 // continue here: https://guides.codepath.com/android/Using-the-RecyclerView#binding-the-adapter-to-the-recyclerview
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
 
-//    mTextViewResult = findViewById(R.id.textView);
     Button buttonParse = findViewById(R.id.button);
 
     mQueue = Volley.newRequestQueue(this);
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void jsonParse() {
-    String url = "https://lldev.thespacedevs.com/2.0.0/launch/upcoming";
+    String url = "https://lldev.thespacedevs.com/2.1.0/launch/upcoming";
 
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
             new Response.Listener<JSONObject>() {
@@ -79,14 +77,16 @@ public class MainActivity extends AppCompatActivity {
                     Launch launch = new Launch();
 
                     launch.setName(jsonLaunch.getString("name"));
-//                    launch.setNet(new SimpleDateFormat(jsonLaunch.getString("net"), Locale.getDefault()));
                     launch.setProvider(jsonLaunch.getJSONObject("launch_service_provider").getString("name"));
                     launch.setLaunchType(jsonLaunch.getJSONObject("launch_service_provider").getString("type"));
-                    launch.setStatus(jsonLaunch.getJSONObject("status").getString("name"));
+                    launch.setStatus(jsonLaunch.getJSONObject("status").getInt("id"));
+
+                    launch.setNet(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault()).parse(jsonLaunch.getString("net")));
+
 
                     launches.add(launch);
                   }
-                } catch (JSONException e) {
+                } catch (JSONException | ParseException e) {
                   // This runs in case the JSON does not contain the correct keys
                   e.printStackTrace();
                 }

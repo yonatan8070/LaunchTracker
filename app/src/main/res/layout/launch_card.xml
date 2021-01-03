@@ -10,10 +10,10 @@
     android:layout_width="wrap_content"
     android:layout_height="8dp"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/card_view" />
+    app:layout_constraintTop_toBottomOf="@+id/cardView" />
   
   <androidx.cardview.widget.CardView
-    android:id="@+id/card_view"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -31,9 +31,21 @@
       android:layout_height="match_parent">
       
       <TextView
+        android:id="@+id/launchProviderAndType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rubik_regular"
+        android:text="SpaceX - Commercial"
+        
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/launchName" />
+      
+      
+      <TextView
         android:id="@+id/launchName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/rubik_regular"
         android:text="Falcon 9 Block 5 | Crew 1"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -41,21 +53,29 @@
         app:layout_constraintTop_toTopOf="parent" />
       
       <TextView
-        android:id="@+id/launchProvider"
+        android:id="@+id/launchNet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SpaceX"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/launchName" />
-  
-      <TextView
-        android:id="@+id/time"
-        android:layout_width="340dp"
-        android:layout_height="18dp"
+        android:fontFamily="@font/rubik_regular"
         android:text="29/12/2020 at 14:06:38"
+        
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/launchProvider" />
-
+        app:layout_constraintTop_toBottomOf="@id/launchProviderAndType" />
+      
+      <TextView
+        android:id="@+id/countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/rubik_regular"
+        android:text="T- 00 : 00 : 00 : 00"
+        android:textColor="@color/black"
+        
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/launchNet" />
+    
     </androidx.constraintlayout.widget.ConstraintLayout>
   
   </androidx.cardview.widget.CardView>

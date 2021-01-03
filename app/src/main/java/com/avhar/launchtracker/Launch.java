@@ -1,12 +1,13 @@
 package com.avhar.launchtracker;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Launch {
   private String name;
   private String provider;
-  private String status;
-  private SimpleDateFormat net;
+  private int status;
+  private Date net;
   private String launchType;
 
   public Launch() {
@@ -33,19 +34,19 @@ public class Launch {
     this.provider = provider;
   }
 
-  public String getStatus() {
+  public int getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(int status) {
     this.status = status;
   }
 
-  public SimpleDateFormat getNet() {
+  public Date getNet() {
     return net;
   }
 
-  public void setNet(SimpleDateFormat net) {
+  public void setNet(Date net) {
     this.net = net;
   }
 
