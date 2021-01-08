@@ -9,5 +9,5 @@
   <color name="white">#FFFFFFFF</color>
   <color name="tbd">#FFB74D</color>
   <color name="go_for_launch">#81C784</color>
-  <color name="fail">#F06292</color>
+  <color name="fail">#E57373</color>
 </resources>
