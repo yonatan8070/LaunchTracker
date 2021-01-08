@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView rvLaunches = (RecyclerView) findViewById(R.id.rvLaunches);
 
-    adapter = new LaunchAdapter(launches);
+    adapter = new LaunchAdapter(launches, getApplicationContext());
 
     rvLaunches.setLayoutManager(new LinearLayoutManager(this));
     rvLaunches.setAdapter(adapter);

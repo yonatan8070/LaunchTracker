@@ -1,7 +1,6 @@
 package com.avhar.launchtracker;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +13,16 @@ import java.util.List;
 import java.util.Locale;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder> {
   private List<Launch> launches;
+  private Context context;
 
-  public LaunchAdapter(List<Launch> launches) {
+  public LaunchAdapter(List<Launch> launches, Context context) {
     this.launches = launches;
+    this.context = context;
   }
 
   @Override
@@ -40,20 +42,20 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
   public void onBindViewHolder(LaunchAdapter.ViewHolder holder, int position) {
     Launch launch = launches.get(position);
 
-    CardView cardView = holder.cardView;
+    View statusBar = holder.statusBar;
 
     switch (launch.getStatus()) {
       case 1:
       case 3:
-        cardView.setCardBackgroundColor(0xFF66bb6a);
+        statusBar.setBackgroundColor(ContextCompat.getColor(context, R.color.go_for_launch));
         break;
       case 2:
       case 5:
       case 8:
-        cardView.setCardBackgroundColor(0xFFffa726);
+        statusBar.setBackgroundColor(ContextCompat.getColor(context, R.color.tbd));
         break;
       case 4:
-        cardView.setCardBackgroundColor(0xFFef5350);
+        statusBar.setBackgroundColor(ContextCompat.getColor(context, R.color.fail));
         break;
       default:
     }
@@ -101,6 +103,7 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
     public TextView provider;
     public TextView net;
     public TextView countdown;
+    public View statusBar;
 
     // We also create a constructor that accepts the entire item row
     // and does the view lookups to find each subview
@@ -114,6 +117,7 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
       net = itemView.findViewById(R.id.launchNet);
       countdown = itemView.findViewById(R.id.countdown);
       cardView = itemView.findViewById(R.id.cardView);
+      statusBar = itemView.findViewById(R.id.statusBar);
     }
   }
 }
