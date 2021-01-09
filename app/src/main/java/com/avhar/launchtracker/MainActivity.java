@@ -98,9 +98,6 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onErrorResponse(VolleyError error) {
         error.printStackTrace();
-        Toast toast = new Toast(getApplicationContext());
-        toast.setText("Error");
-        toast.show();
       }
     });
     mQueue.add(request);

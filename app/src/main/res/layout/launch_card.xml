@@ -28,14 +28,14 @@
     
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent" >
+      android:layout_height="match_parent">
       
-    <View
-      android:id="@+id/statusBar"
-      android:layout_width="match_parent"
-      android:layout_height="8dp"
-      android:background="@color/black"
-      app:layout_constraintBottom_toBottomOf="parent"/>
+      <View
+        android:id="@+id/statusBar"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/rubik_regular"
         android:text="Falcon 9 Block 5 | Crew 1"
-        android:textColor="@color/black"
+        android:textColor="?titleTextColor"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -82,8 +82,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/rubik_regular"
         android:text="T- 00 : 00 : 00 : 00"
-        android:textColor="@color/black"
-        
+        android:textColor="?titleTextColor"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
