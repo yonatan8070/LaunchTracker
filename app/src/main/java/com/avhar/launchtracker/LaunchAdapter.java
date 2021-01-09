@@ -1,6 +1,7 @@
 package com.avhar.launchtracker;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -84,7 +87,7 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
         long timeUntilLaunch = launch.getNet().getTime() - now.getTime();
         countdownView.setText(countdownFormat.format(new Date(timeUntilLaunch)));
 
-        handler.postDelayed(this, 1000);
+        handler.postDelayed(this, 1000 - (now.getTime() % 1000));
       }
     }, 1000);
   }
