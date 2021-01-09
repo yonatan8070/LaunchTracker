@@ -85,11 +85,11 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
       public void run() {
         Date now = new Date();
         long timeUntilLaunch = launch.getNet().getTime() - now.getTime();
-        countdownView.setText(countdownFormat.format(new Date(timeUntilLaunch)));
+        countdownView.setText(countdownFormat.format(new Date(timeUntilLaunch + 1000)));
 
         handler.postDelayed(this, 1000 - (now.getTime() % 1000));
       }
-    }, 1000);
+    }, 0);
   }
 
   @Override
