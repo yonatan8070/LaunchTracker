@@ -24,7 +24,9 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
   //  private TextView mTextViewResult;
@@ -69,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
               public void onResponse(JSONObject response) {
                 System.out.println("Response received from " + url);
                 try {
-                  // This is the object containing the JSON list with the launches
                   JSONArray results = response.getJSONArray("results");
 
                   for (int i = 0; i < results.length(); i++) {
@@ -81,8 +82,9 @@ public class MainActivity extends AppCompatActivity {
                     launch.setLaunchType(jsonLaunch.getJSONObject("launch_service_provider").getString("type"));
                     launch.setStatus(jsonLaunch.getJSONObject("status").getInt("id"));
 
-                    launch.setNet(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault()).parse(jsonLaunch.getString("net")));
-
+                    SimpleDateFormat decoder = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+                    decoder.setTimeZone(TimeZone.getTimeZone("Z"));
+                    launch.setNet(decoder.parse(jsonLaunch.getString("net")));
 
                     launches.add(launch);
                   }

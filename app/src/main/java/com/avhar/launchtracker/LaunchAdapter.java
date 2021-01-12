@@ -11,9 +11,15 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,7 +42,6 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
     LayoutInflater inflater = LayoutInflater.from(context);
 
     // Inflate the custom layout
-    System.out.println("Inflating Layout");
     View launchView = inflater.inflate(R.layout.launch_card, parent, false);
 
     // Return a new holder instance
@@ -74,6 +79,8 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
 
     TextView netView = holder.net;
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm:ss", Locale.getDefault());
+    format.setTimeZone(TimeZone.getDefault());
+
     netView.setText(format.format(launch.getNet()));
 
     TextView countdownView = holder.countdown;
