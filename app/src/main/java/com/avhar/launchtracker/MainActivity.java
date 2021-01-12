@@ -1,14 +1,8 @@
 package com.avhar.launchtracker;
-// continue here: https://guides.codepath.com/android/Using-the-RecyclerView#binding-the-adapter-to-the-recyclerview
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,12 +18,14 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class MainActivity extends AppCompatActivity {
-  //  private TextView mTextViewResult;
   private RequestQueue mQueue;
   ArrayList<Launch> launches;
   LaunchAdapter adapter;
@@ -39,21 +35,11 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-
-    Button buttonParse = findViewById(R.id.button);
-
     mQueue = Volley.newRequestQueue(this);
     launches = new ArrayList<>();
     jsonParse();
 
-    buttonParse.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        jsonParse();
-      }
-    });
-
-    RecyclerView rvLaunches = (RecyclerView) findViewById(R.id.rvLaunches);
+    RecyclerView rvLaunches = findViewById(R.id.rvLaunches);
 
     adapter = new LaunchAdapter(launches, getApplicationContext());
 
@@ -66,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
             new Response.Listener<JSONObject>() {
-              // This runs where a response arrives from the server
               @Override
               public void onResponse(JSONObject response) {
                 System.out.println("Response received from " + url);
@@ -96,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
               }
             }, new Response.ErrorListener() {
-      // This runs if an error is returned from the server
       @Override
       public void onErrorResponse(VolleyError error) {
         error.printStackTrace();

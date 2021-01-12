@@ -1,41 +1,33 @@
 package com.avhar.launchtracker;
 
 import android.content.Context;
-import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.Timer;
-import java.util.TimerTask;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder> {
-  private List<Launch> launches;
-  private Context context;
+  private final List<Launch> launches;
+  private final Context context;
 
   public LaunchAdapter(List<Launch> launches, Context context) {
     this.launches = launches;
     this.context = context;
   }
 
+  @NonNull
   @Override
   public LaunchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     Context context = parent.getContext();
@@ -75,7 +67,7 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
     nameView.setText(launch.getName());
 
     TextView providerView = holder.provider;
-    providerView.setText(launch.getProvider() + " - " + launch.getLaunchType());
+    providerView.setText(String.format("%s - %s", launch.getProvider(), launch.getLaunchType()));
 
     TextView netView = holder.net;
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm:ss", Locale.getDefault());

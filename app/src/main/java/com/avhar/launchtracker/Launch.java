@@ -1,6 +1,5 @@
 package com.avhar.launchtracker;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Launch {
