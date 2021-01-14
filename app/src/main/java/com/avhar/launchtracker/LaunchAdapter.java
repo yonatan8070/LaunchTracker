@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.avhar.launchtracker.data.Launch;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

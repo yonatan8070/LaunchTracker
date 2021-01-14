@@ -1,8 +1,9 @@
-package com.avhar.launchtracker;
+package com.avhar.launchtracker.data;
 
 import java.util.Date;
 
 public class Launch {
+  private String ll2Id;
   private String name;
   private String provider;
   private int status;
@@ -55,6 +56,14 @@ public class Launch {
 
   public void setLaunchType(String launchType) {
     this.launchType = launchType;
+  }
+
+  public String getLl2Id() {
+    return this.ll2Id;
+  }
+
+  public void setLl2Id(String ll2Id) {
+    this.ll2Id = ll2Id;
   }
 
   public String toString() {
