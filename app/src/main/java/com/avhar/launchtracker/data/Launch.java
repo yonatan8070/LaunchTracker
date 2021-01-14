@@ -9,6 +9,7 @@ public class Launch {
   private int status;
   private Date net;
   private String launchType;
+  private Rocket rocket;
 
   public Launch() {
   }
@@ -64,6 +65,14 @@ public class Launch {
 
   public void setLl2Id(String ll2Id) {
     this.ll2Id = ll2Id;
+  }
+
+  public Rocket getRocket() {
+    return this.rocket;
+  }
+
+  public void setRocket(Rocket rocket) {
+    this.rocket = rocket;
   }
 
   public String toString() {
