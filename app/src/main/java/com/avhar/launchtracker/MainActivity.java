@@ -1,5 +1,6 @@
 package com.avhar.launchtracker;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.android.volley.Request;
@@ -14,9 +15,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -36,7 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
     mQueue = Volley.newRequestQueue(this);
     launches = new ArrayList<>();
-    jsonParse();
+
+    long cacheTime = loadFromCache();
+    long currentTime = new Date().getTime();
+
+    if (currentTime - cacheTime > 900000) {
+      launches.clear();
+      loadFromAPI();
+    }
 
     RecyclerView rvLaunches = findViewById(R.id.rvLaunches);
 
@@ -46,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     rvLaunches.setAdapter(adapter);
   }
 
-  private void jsonParse() {
+  private void loadFromAPI() {
     String url = "https://lldev.thespacedevs.com/2.1.0/launch/upcoming";
 
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -81,8 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
                     launches.add(launch);
                   }
+
+                  updateCache();
                 } catch (JSONException | ParseException e) {
-                  // This runs in case the JSON does not contain the correct keys
                   e.printStackTrace();
                 }
 
@@ -95,5 +109,49 @@ public class MainActivity extends AppCompatActivity {
       }
     });
     mQueue.add(request);
+  }
+
+  private void updateCache() {
+    FileOutputStream dataStream;
+    FileOutputStream dateStream;
+    try {
+      dataStream = this.openFileOutput("cache", Context.MODE_PRIVATE);
+      dateStream = this.openFileOutput("date", Context.MODE_PRIVATE);
+      ObjectOutputStream dataOutput = new ObjectOutputStream(dataStream);
+      ObjectOutputStream dateOutput = new ObjectOutputStream(dateStream);
+      dataOutput.writeObject(launches);
+      dateOutput.writeObject(new Date());
+      dataOutput.close();
+      dataStream.close();
+      dateOutput.close();
+      dateStream.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private long loadFromCache() {
+    long time = -1;
+
+    FileInputStream fis;
+    FileInputStream dateStream;
+    try {
+      fis = this.openFileInput("cache");
+      dateStream = this.openFileInput("date");
+      ObjectInputStream is = new ObjectInputStream(fis);
+      ObjectInputStream dateInput = new ObjectInputStream(dateStream);
+      launches = (ArrayList<Launch>) is.readObject();
+      Date date = (Date) dateInput.readObject();
+      time = date.getTime();
+      is.close();
+      fis.close();
+
+      dateStream.close();
+      dateInput.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return time;
   }
 }
