@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     if (currentTime - cacheTime > 900000) {
       launches.clear();
       loadFromAPI();
+    } else {
+      findViewById(R.id.loadingIcon).setVisibility(View.GONE);
     }
 
     RecyclerView rvLaunches = findViewById(R.id.rvLaunches);
