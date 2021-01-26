@@ -14,18 +14,12 @@
   
   <androidx.cardview.widget.CardView
     android:id="@+id/cardView"
+    style="@style/Cards"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_margin="8dp"
-    android:clipToPadding="false"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    app:contentPadding="0dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    android:onClick="cardTap"
     android:foreground="?android:attr/selectableItemBackground">
     
     <androidx.constraintlayout.widget.ConstraintLayout
