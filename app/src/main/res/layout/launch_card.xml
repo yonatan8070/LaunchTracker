@@ -24,7 +24,9 @@
     app:contentPadding="0dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_constraintTop_toTopOf="parent"
+    android:onClick="cardTap"
+    android:foreground="?android:attr/selectableItemBackground">
     
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
@@ -48,7 +50,6 @@
         android:id="@+id/launchProviderAndType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/rubik_regular"
         android:text="SpaceX - Commercial"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/launchName" />
@@ -58,7 +59,6 @@
         android:id="@+id/launchName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/rubik_regular"
         android:text="Falcon 9 Block 5 | Crew 1"
         android:textColor="?titleTextColor"
         android:textSize="16sp"
@@ -69,7 +69,6 @@
         android:id="@+id/launchNet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/rubik_regular"
         android:text="29/12/2020 at 14:06:38"
         
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +79,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/rubik_regular"
         android:text="T- 00 : 00 : 00 : 00"
         android:textColor="?titleTextColor"
         android:textSize="36sp"

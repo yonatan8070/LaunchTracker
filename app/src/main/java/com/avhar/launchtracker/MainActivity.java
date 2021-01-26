@@ -70,6 +70,14 @@ public class MainActivity extends AppCompatActivity {
                     SimpleDateFormat decoder = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
                     decoder.setTimeZone(TimeZone.getTimeZone("Z"));
                     launch.setNet(decoder.parse(jsonLaunch.getString("net")));
+                    launch.setWindowStart(decoder.parse(jsonLaunch.getString("window_start")));
+                    launch.setWindowEnd(decoder.parse(jsonLaunch.getString("window_end")));
+
+                    if (!jsonLaunch.isNull("mission")) {
+                      launch.setDescription(jsonLaunch.getJSONObject("mission").getString("description"));
+                    } else {
+                      launch.setDescription("Description unavailable");
+                    }
 
                     launches.add(launch);
                   }

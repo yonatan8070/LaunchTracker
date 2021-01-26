@@ -1,6 +1,8 @@
 package com.avhar.launchtracker.data;
 
-public class Rocket {
+import java.io.Serializable;
+
+public class Rocket implements Serializable {
   private String ll2Id;
   private String name; // In text
   private double length; // In meters

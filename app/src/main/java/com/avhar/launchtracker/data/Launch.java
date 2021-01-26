@@ -1,17 +1,22 @@
 package com.avhar.launchtracker.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Launch {
+public class Launch implements Serializable {
   private String ll2Id;
   private String name;
   private String provider;
+  private String description;
   private int status;
   private Date net;
+  private Date windowStart;
+  private Date windowEnd;
   private String launchType;
   private Rocket rocket;
 
   public Launch() {
+    this.rocket = new Rocket();
   }
 
   public Launch(String name, String provider) {
@@ -35,6 +40,14 @@ public class Launch {
     this.provider = provider;
   }
 
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
   public int getStatus() {
     return status;
   }
@@ -49,6 +62,22 @@ public class Launch {
 
   public void setNet(Date net) {
     this.net = net;
+  }
+
+  public Date getWindowStart() {
+    return windowStart;
+  }
+
+  public void setWindowStart(Date windowsStart) {
+    this.windowStart = windowsStart;
+  }
+
+  public Date getWindowEnd() {
+    return windowEnd;
+  }
+
+  public void setWindowEnd(Date windowEnd) {
+    this.windowEnd = windowEnd;
   }
 
   public String getLaunchType() {
@@ -76,6 +105,6 @@ public class Launch {
   }
 
   public String toString() {
-    return this.name + this.provider;
+    return this.name + " " + this.provider;
   }
 }

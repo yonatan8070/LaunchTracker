@@ -14,5 +14,38 @@
     <!-- Status bar color. -->
     <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     <!-- Customize your theme here. -->
+    <item name="android:fontFamily">@font/rubik_regular</item>
+  </style>
+  
+  <style name="ChipTabLayout" parent="Widget.Design.TabLayout">
+    <item name="android:layout_height">36dp</item>
+    <item name="tabIndicator">@drawable/sh_chip</item>
+    <item name="tabIndicatorColor">?colorPrimaryVariant</item>
+    <item name="tabIndicatorHeight">36dp</item>
+    <item name="tabSelectedTextColor">?colorOnPrimary</item>
+    <item name="tabTextColor">?colorOnBackground</item>
+    <item name="tabRippleColor">#00000000</item>
+    <item name="tabTextAppearance">@style/tabLabel</item>
+  </style>
+  
+  <style name="tabLabel" parent="@android:style/TextAppearance.Widget.TabWidget">
+    <item name="android:fontFamily">@font/rubik_bold</item>
+  </style>
+  
+  <style name="PropertyTitle">
+    <item name="fontFamily">@font/rubik_bold</item>
+    <item name="android:textColor">?titleTextColor</item>
+    <item name="android:textSize">16sp</item>
+  </style>
+  
+  <style name="PropertyValue">
+    <item name="fontFamily">@font/rubik_regular</item>
+  </style>
+  
+  <style name="Cards" parent="CardView">
+    <item name="cardBackgroundColor">#FAFAFA</item>
+    <item name="cardCornerRadius">8dp</item>
+    <item name="cardElevation">4dp</item>
+    <item name="android:layout_margin">8dp</item>
   </style>
 </resources>

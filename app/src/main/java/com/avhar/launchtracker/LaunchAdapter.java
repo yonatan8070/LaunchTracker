@@ -1,6 +1,7 @@
 package com.avhar.launchtracker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,14 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
   @Override
   public void onBindViewHolder(LaunchAdapter.ViewHolder holder, int position) {
     Launch launch = launches.get(position);
+
+    CardView cardView = holder.cardView;
+    cardView.setOnClickListener(view -> {
+      Intent i = new Intent(context, DetailsActivity.class);
+      i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      i.putExtra("launch", launch);
+      context.startActivity(i);
+    });
 
     View statusBar = holder.statusBar;
 
