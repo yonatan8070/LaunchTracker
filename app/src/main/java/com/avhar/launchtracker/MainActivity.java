@@ -1,7 +1,10 @@
 package com.avhar.launchtracker;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -60,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void loadFromAPI() {
+    ImageView loadingIcon = findViewById(R.id.loadingIcon);
+    ((AnimationDrawable) loadingIcon.getBackground()).start();
+
     String url = "https://lldev.thespacedevs.com/2.1.0/launch/upcoming";
 
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -94,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
                     launches.add(launch);
                   }
-
+                  loadingIcon.setVisibility(View.GONE);
                   updateCache();
                 } catch (JSONException | ParseException e) {
                   e.printStackTrace();
@@ -108,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         error.printStackTrace();
       }
     });
+
     mQueue.add(request);
   }
 

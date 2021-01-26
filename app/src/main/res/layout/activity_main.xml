@@ -6,14 +6,6 @@
   android:layout_height="match_parent"
   tools:context=".MainActivity">
   
-  <TextView
-    android:id="@+id/textView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textColor="#000000"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent" />
-  
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/rvLaunches"
     android:layout_width="0dp"
@@ -24,4 +16,17 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
+  
+  <ImageView
+    android:id="@+id/loadingIcon"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:layout_marginTop="128dp"
+    android:background="@drawable/loading_icon"
+    android:backgroundTint="?colorPrimary"
+    android:visibility="visible"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:ignore="ContentDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>
