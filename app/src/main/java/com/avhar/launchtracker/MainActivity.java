@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
   private RequestQueue mQueue;
   ArrayList<Launch> launches;
   LaunchAdapter adapter;
-  String url = "https://lldev.thespacedevs.com/2.1.0/launch/upcoming";
+  String url = "https://lldev.thespacedevs.com/2.1.0/launch/upcoming?mode=detailed";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
