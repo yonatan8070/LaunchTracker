@@ -19,11 +19,6 @@ public class Launch implements Serializable {
     this.rocket = new Rocket();
   }
 
-  public Launch(String name, String provider) {
-    this.name = name;
-    this.provider = provider;
-  }
-
   public String getName() {
     return name;
   }
