@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
   private RequestQueue mQueue;
   ArrayList<Launch> launches;
   LaunchAdapter adapter;
+  String url = "https://lldev.thespacedevs.com/2.1.0/launch/upcoming";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +64,22 @@ public class MainActivity extends AppCompatActivity {
 
     rvLaunches.setLayoutManager(new LinearLayoutManager(this));
     rvLaunches.setAdapter(adapter);
+
+    rvLaunches.addOnScrollListener(new RecyclerView.OnScrollListener() {
+      @Override
+      public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+        super.onScrollStateChanged(recyclerView, newState);
+
+        if (!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
+          loadFromAPI();
+        }
+      }
+    });
   }
 
   private void loadFromAPI() {
     ImageView loadingIcon = findViewById(R.id.loadingIcon);
     ((AnimationDrawable) loadingIcon.getBackground()).start();
-
-    String url = "https://lldev.thespacedevs.com/2.1.0/launch/upcoming";
 
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
             new Response.Listener<JSONObject>() {
@@ -102,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
 
                     launches.add(launch);
                   }
+
+                  url = response.getString("next");
                   loadingIcon.setVisibility(View.GONE);
                   updateCache();
                 } catch (JSONException | ParseException e) {
