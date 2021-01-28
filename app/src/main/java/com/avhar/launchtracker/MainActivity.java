@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.avhar.launchtracker.data.Launch;
+import com.avhar.launchtracker.data.Rocket;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
       public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
 
-        if (!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
+        if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
           loadFromAPI();
         }
       }
@@ -110,6 +111,17 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                       launch.setDescription("Description unavailable");
                     }
+
+                    Rocket rocket = launch.getRocket();
+                    JSONObject jsonRocket = jsonLaunch.getJSONObject("rocket").getJSONObject("configuration");
+
+                    rocket.setDiameter(jsonRocket.getDouble("diameter"));
+                    rocket.setLength(jsonRocket.getDouble("length"));
+                    rocket.setName(jsonRocket.getString("full_name"));
+                    rocket.setImage(jsonRocket.getString("max_stage"));
+                    rocket.setMass(jsonRocket.getDouble("launch_mass"));
+                    rocket.setLl2Id(jsonRocket.getInt("id"));
+                    rocket.setLowEarthCapacity(jsonRocket.getDouble("leo_capacity"));
 
                     launches.add(launch);
                   }

@@ -3,7 +3,7 @@ package com.avhar.launchtracker.data;
 import java.io.Serializable;
 
 public class Rocket implements Serializable {
-  private String ll2Id;
+  private int ll2Id;
   private String name; // In text
   private double length; // In meters
   private double diameter; // In meters
@@ -17,11 +17,11 @@ public class Rocket implements Serializable {
   public Rocket() {
   }
 
-  public String getLl2Id() {
+  public int getLl2Id() {
     return ll2Id;
   }
 
-  public void setLl2Id(String ll2Id) {
+  public void setLl2Id(int ll2Id) {
     this.ll2Id = ll2Id;
   }
 
