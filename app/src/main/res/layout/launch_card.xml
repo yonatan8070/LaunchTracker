@@ -44,7 +44,7 @@
         android:id="@+id/launchProviderAndType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SpaceX - Commercial"
+        tools:text="SpaceX - Commercial"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/launchName" />
       
@@ -53,7 +53,7 @@
         android:id="@+id/launchName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Falcon 9 Block 5 | Crew 1"
+        tools:text="Falcon 9 Block 5 | Crew 1"
         android:textColor="?titleTextColor"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,8 +63,7 @@
         android:id="@+id/launchNet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="29/12/2020 at 14:06:38"
-        
+        tools:text="29/12/2020 at 14:06:38"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/launchProviderAndType" />
       
@@ -73,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="T- 00 : 00 : 00 : 00"
+        tools:text="T- 00 : 00 : 00 : 00"
         android:textColor="?titleTextColor"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
