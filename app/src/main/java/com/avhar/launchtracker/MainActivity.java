@@ -121,8 +121,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void loadUpcoming() {
-    ImageView loadingIcon = findViewById(R.id.loadingIcon);
-    ((AnimationDrawable) loadingIcon.getBackground()).start();
+    playLoadingIcon();
 
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, upcomingUrl, null,
             new Response.Listener<JSONObject>() {
@@ -169,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                   }
 
                   upcomingUrl = response.getString("next");
-                  loadingIcon.setVisibility(View.GONE);
+                  stopLoadingIcon();
                   updateCache();
                 } catch (JSONException | ParseException e) {
                   e.printStackTrace();
@@ -188,8 +187,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void loadPrevious() {
-    ImageView loadingIcon = findViewById(R.id.loadingIcon);
-    ((AnimationDrawable) loadingIcon.getBackground()).start();
+    playLoadingIcon();
 
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, previousUrl, null,
             new Response.Listener<JSONObject>() {
@@ -236,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                   }
 
                   previousUrl = response.getString("next");
-                  loadingIcon.setVisibility(View.GONE);
+                  stopLoadingIcon();
                   updateCache();
                 } catch (JSONException | ParseException e) {
                   e.printStackTrace();
@@ -252,6 +250,17 @@ public class MainActivity extends AppCompatActivity {
     });
 
     mQueue.add(request);
+  }
+
+  private void playLoadingIcon() {
+    ImageView loadingIcon = findViewById(R.id.loadingIcon);
+    loadingIcon.setVisibility(View.VISIBLE);
+    ((AnimationDrawable) loadingIcon.getBackground()).start();
+  }
+
+  private void stopLoadingIcon() {
+    ImageView loadingIcon = findViewById(R.id.loadingIcon);
+    loadingIcon.setVisibility(View.GONE);
   }
 
 
