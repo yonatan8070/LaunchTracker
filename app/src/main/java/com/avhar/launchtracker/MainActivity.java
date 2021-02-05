@@ -94,17 +94,17 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonLaunch = results.getJSONObject(i);
                     Launch launch = new Launch();
 
-                    launch.setLl2Id(jsonLaunch.getString("id"));
-                    launch.setName(jsonLaunch.getString("name"));
-                    launch.setProvider(jsonLaunch.getJSONObject("launch_service_provider").getString("name"));
-                    launch.setLaunchType(jsonLaunch.getJSONObject("launch_service_provider").getString("type"));
-                    launch.setStatus(jsonLaunch.getJSONObject("status").getInt("id"));
+                    launch.setLl2Id(jsonLaunch.optString("id"));
+                    launch.setName(jsonLaunch.optString("name"));
+                    launch.setProvider(jsonLaunch.getJSONObject("launch_service_provider").optString("name"));
+                    launch.setLaunchType(jsonLaunch.getJSONObject("launch_service_provider").optString("type"));
+                    launch.setStatus(jsonLaunch.getJSONObject("status").optInt("id"));
 
                     SimpleDateFormat decoder = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
                     decoder.setTimeZone(TimeZone.getTimeZone("Z"));
-                    launch.setNet(decoder.parse(jsonLaunch.getString("net")));
-                    launch.setWindowStart(decoder.parse(jsonLaunch.getString("window_start")));
-                    launch.setWindowEnd(decoder.parse(jsonLaunch.getString("window_end")));
+                    launch.setNet(decoder.parse(jsonLaunch.optString("net")));
+                    launch.setWindowStart(decoder.parse(jsonLaunch.optString("window_start")));
+                    launch.setWindowEnd(decoder.parse(jsonLaunch.optString("window_end")));
 
                     if (!jsonLaunch.isNull("mission")) {
                       launch.setDescription(jsonLaunch.getJSONObject("mission").getString("description"));
@@ -115,13 +115,13 @@ public class MainActivity extends AppCompatActivity {
                     Rocket rocket = launch.getRocket();
                     JSONObject jsonRocket = jsonLaunch.getJSONObject("rocket").getJSONObject("configuration");
 
-                    rocket.setDiameter(jsonRocket.getDouble("diameter"));
-                    rocket.setLength(jsonRocket.getDouble("length"));
-                    rocket.setName(jsonRocket.getString("full_name"));
-                    rocket.setImage(jsonRocket.getString("max_stage"));
-                    rocket.setMass(jsonRocket.getDouble("launch_mass"));
-                    rocket.setLl2Id(jsonRocket.getInt("id"));
-                    rocket.setLowEarthCapacity(jsonRocket.getDouble("leo_capacity"));
+                    rocket.setDiameter(jsonRocket.optDouble("diameter"));
+                    rocket.setLength(jsonRocket.optDouble("length"));
+                    rocket.setName(jsonRocket.optString("full_name"));
+                    rocket.setImage(jsonRocket.optString("max_stage"));
+                    rocket.setMass(jsonRocket.optDouble("launch_mass"));
+                    rocket.setLl2Id(jsonRocket.optInt("id"));
+                    rocket.setLowEarthCapacity(jsonRocket.optDouble("leo_capacity"));
 
                     launches.add(launch);
                   }
