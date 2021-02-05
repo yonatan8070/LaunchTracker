@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
   PreviousLaunchAdapter previousAdapter;
   String upcomingUrl = "https://lldev.thespacedevs.com/2.1.0/launch/upcoming?mode=detailed";
   String previousUrl = "https://lldev.thespacedevs.com/2.1.0/launch/previous?mode=detailed";
-  String currentUrl = upcomingUrl;
+  boolean state = true; // True = upcoming, false = previous
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,9 @@ public class MainActivity extends AppCompatActivity {
       public void onTabSelected(TabLayout.Tab tab) {
         if (tab.getPosition() == 0) {
           rvLaunches.setAdapter(adapter);
+          state = true;
         } else if (tab.getPosition() == 1) {
+          state = false;
           rvLaunches.setAdapter(previousAdapter);
           loadPrevious();
         }

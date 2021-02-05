@@ -61,6 +61,8 @@ public class DetailsActivity extends AppCompatActivity {
     Launch launch = (Launch) getIntent().getSerializableExtra("launch");
     assert launch != null;
 
+    boolean displayCountdown = getIntent().getBooleanExtra("displayCountdown", false);
+
 //    url += launch.getLl2Id();
 
     ImageView loadingIcon = findViewById(R.id.loadingIcon);
@@ -79,19 +81,23 @@ public class DetailsActivity extends AppCompatActivity {
     description.setText(launch.getDescription());
 
     TextView countdownView = findViewById(R.id.countdown);
-    SimpleDateFormat countdownFormat = new SimpleDateFormat("'T-' DD : HH : mm : ss", Locale.getDefault());
+    if (displayCountdown) {
+      SimpleDateFormat countdownFormat = new SimpleDateFormat("'T-' DD : HH : mm : ss", Locale.getDefault());
 
-    Handler handler = new Handler();
-    handler.postDelayed(new Runnable() {
-      @Override
-      public void run() {
-        Date now = new Date();
-        long timeUntilLaunch = launch.getNet().getTime() - now.getTime();
-        countdownView.setText(countdownFormat.format(new Date(timeUntilLaunch + 1000)));
+      Handler handler = new Handler();
+      handler.postDelayed(new Runnable() {
+        @Override
+        public void run() {
+          Date now = new Date();
+          long timeUntilLaunch = launch.getNet().getTime() - now.getTime();
+          countdownView.setText(countdownFormat.format(new Date(timeUntilLaunch + 1000)));
 
-        handler.postDelayed(this, 1000 - (now.getTime() % 1000));
-      }
-    }, 0);
+          handler.postDelayed(this, 1000 - (now.getTime() % 1000));
+        }
+      }, 0);
+    } else {
+      countdownView.setVisibility(View.GONE);
+    }
 
     TextView netView = findViewById(R.id.net);
     SimpleDateFormat netFormat = new SimpleDateFormat("'NET: 'dd/MM/yyyy 'at' HH:mm:ss", Locale.getDefault());

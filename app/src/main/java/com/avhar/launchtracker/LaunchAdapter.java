@@ -52,6 +52,7 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
       Intent i = new Intent(context, DetailsActivity.class);
       i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       i.putExtra("launch", launch);
+      i.putExtra("displayCountdown", true);
       context.startActivity(i);
     });
 

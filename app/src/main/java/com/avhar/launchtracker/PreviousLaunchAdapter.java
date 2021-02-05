@@ -52,6 +52,7 @@ public class PreviousLaunchAdapter extends RecyclerView.Adapter<PreviousLaunchAd
       Intent i = new Intent(context, DetailsActivity.class);
       i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       i.putExtra("launch", launch);
+      i.putExtra("displayCountdown", false);
       context.startActivity(i);
     });
 
