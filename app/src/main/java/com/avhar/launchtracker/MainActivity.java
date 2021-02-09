@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
   String upcomingUrl = "https://lldev.thespacedevs.com/2.1.0/launch/upcoming?mode=detailed";
   String previousUrl = "https://lldev.thespacedevs.com/2.1.0/launch/previous?mode=detailed";
   boolean state = true; // True = upcoming, false = previous
+  RecyclerView rvLaunches;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
     loadData();
 
-    RecyclerView rvLaunches = findViewById(R.id.rvLaunches);
+    rvLaunches = findViewById(R.id.rvLaunches);
 
     adapter = new LaunchAdapter(upcomingLaunches, getApplicationContext());
     previousAdapter = new PreviousLaunchAdapter(previousLaunches, getApplicationContext());
 
     rvLaunches.setLayoutManager(new LinearLayoutManager(this));
     rvLaunches.setAdapter(adapter);
+    rvLaunches.scheduleLayoutAnimation();
 
     TabLayout tabs = findViewById(R.id.tabLayout);
     tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -175,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 adapter.notifyDataSetChanged();
+                rvLaunches.scheduleLayoutAnimation();
               }
             }, new Response.ErrorListener() {
       @Override
@@ -241,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 previousAdapter.notifyDataSetChanged();
+                rvLaunches.scheduleLayoutAnimation();
               }
             }, new Response.ErrorListener() {
       @Override
