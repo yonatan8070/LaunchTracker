@@ -1,6 +1,7 @@
 package com.avhar.launchtracker;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
@@ -44,6 +45,8 @@ import java.util.Map;
 
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ActionMenuView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -57,6 +60,10 @@ public class DetailsActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setTheme(R.style.Theme_LaunchTracker);
     setContentView(R.layout.activity_details);
+
+    Toolbar toolbar = findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     Launch launch = (Launch) getIntent().getSerializableExtra("launch");
     assert launch != null;
@@ -165,6 +172,12 @@ public class DetailsActivity extends AppCompatActivity {
     TextView nameValue = rocketName.findViewById(R.id.value);
     nameLabel.setText("Name");
     nameValue.setText(rocket.getName());
+  }
+
+  @Override
+  public boolean onSupportNavigateUp() {
+    finish();
+    return true;
   }
 
   private void loadTelemetry() {
