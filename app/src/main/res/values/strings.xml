@@ -3,4 +3,5 @@
   <string name="velocity">Velocity</string>
   <string name="acceleration">Acceleration</string>
   <string name="altitude">Altitude</string>
+  <string name="image_of_launch">Image of launch</string>
 </resources>

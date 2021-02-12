@@ -6,6 +6,16 @@
   android:layout_height="match_parent"
   android:orientation="vertical">
   
+  
+  <androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    android:elevation="4dp"
+    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+  
   <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -37,8 +47,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:background="@drawable/ic_loading_100"
-          android:contentDescription="Image of launch" />
+          android:contentDescription="@string/image_of_launch" />
       
       </androidx.cardview.widget.CardView>
       
@@ -183,62 +192,91 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeCard">
         
-        <GridLayout
+        <TableLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:columnCount="3"
-          android:foregroundGravity="center"
-          android:useDefaultMargins="false">
+          android:stretchColumns="1">
           
-          <include
-            android:id="@+id/rocketName"
-            layout="@layout/rocket_property_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1" />
-          
-          <include
-            android:id="@+id/length"
-            layout="@layout/rocket_property_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1" />
-          
-          <include
-            android:id="@+id/diameter"
-            layout="@layout/rocket_property_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1" />
-          
-          <include
-            android:id="@+id/mass"
-            layout="@layout/rocket_property_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1" />
-          
-          <include
-            android:id="@+id/stageCount"
-            layout="@layout/rocket_property_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1" />
-          
-          <include
-            android:id="@+id/launchCost"
-            layout="@layout/rocket_property_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1" />
-        </GridLayout>
-      
+          <TableRow>
+            
+            <TextView
+              android:layout_width="96dp"
+              android:layout_height="wrap_content"
+              style="@style/PropertyTitle"
+              android:text="Name:" />
+            
+            <TextView
+              android:id="@+id/rocketName"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/PropertyValue"
+              tools:text="Never gonna give you up" />
+          </TableRow>
+  
+          <TableRow>
+    
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/PropertyTitle"
+              android:text="Length:" />
+    
+            <TextView
+              android:id="@+id/rocketLength"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/PropertyValue"
+              tools:text="Never gonna let you down" />
+          </TableRow>
+  
+          <TableRow>
+    
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/PropertyTitle"
+              android:text="Diameter:" />
+    
+            <TextView
+              android:id="@+id/rocketDiameter"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/PropertyValue"
+              tools:text="Never gonna run around and desert you" />
+          </TableRow>
+  
+          <TableRow>
+    
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/PropertyTitle"
+              android:text="Mass:" />
+    
+            <TextView
+              android:id="@+id/rocketMass"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/PropertyValue"
+              tools:text="Never gonna make you cry" />
+          </TableRow>
+  
+          <TableRow>
+    
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/PropertyTitle"
+              android:text="Stages:" />
+    
+            <TextView
+              android:id="@+id/rocketStages"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/PropertyValue"
+              tools:text="Never gonna say goodbye" />
+          </TableRow>
+        </TableLayout>
       </androidx.cardview.widget.CardView>
       
       <androidx.cardview.widget.CardView
@@ -285,13 +323,4 @@
       </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
   </ScrollView>
-  
-  <androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    android:elevation="4dp"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 </LinearLayout>

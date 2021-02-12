@@ -171,11 +171,21 @@ public class DetailsActivity extends AppCompatActivity {
     windowEnd.setText(windowEndFormat.format(launch.getWindowEnd()));
 
     Rocket rocket = launch.getRocket();
-    ConstraintLayout rocketName = findViewById(R.id.rocketName);
-    TextView nameLabel = rocketName.findViewById(R.id.label);
-    TextView nameValue = rocketName.findViewById(R.id.value);
-    nameLabel.setText("Name");
-    nameValue.setText(rocket.getName());
+    TextView rocketName = findViewById(R.id.rocketName);
+    rocketName.setText(rocket.getName());
+
+    TextView rocketLength = findViewById(R.id.rocketLength);
+    rocketLength.setText(String.format(Locale.getDefault(), "%1$,.2fm", rocket.getLength()));
+
+    TextView rocketDiameter = findViewById(R.id.rocketDiameter);
+    rocketDiameter.setText(String.format(Locale.getDefault(), "%1$,.2fm", rocket.getDiameter()));
+
+    TextView rocketMass = findViewById(R.id.rocketMass);
+    rocketMass.setText(String.format(Locale.getDefault(), "%1$,.0fkg", rocket.getMass() * 1000));
+
+    TextView rocketStages = findViewById(R.id.rocketStages);
+    System.out.println(rocket.getStageCount());
+    rocketStages.setText(String.format(Locale.getDefault(), "%1$,.0f", (float) rocket.getStageCount()));
 
     requestImage();
   }
@@ -188,7 +198,6 @@ public class DetailsActivity extends AppCompatActivity {
 
   private void requestImage() {
     String url = launch.getRocket().getImage();
-    System.out.println(url);
 
     ImageRequest request = new ImageRequest(url, new Response.Listener<Bitmap>() {
       @Override

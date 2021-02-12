@@ -40,6 +40,7 @@
   
   <style name="PropertyValue">
     <item name="fontFamily">@font/rubik_regular</item>
+    <item name="android:textSize">16sp</item>
   </style>
   
   <style name="Cards" parent="CardView">

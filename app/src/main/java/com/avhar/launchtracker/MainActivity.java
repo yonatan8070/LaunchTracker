@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
                     rocket.setMass(jsonRocket.optDouble("launch_mass"));
                     rocket.setLl2Id(jsonRocket.optInt("id"));
                     rocket.setLowEarthCapacity(jsonRocket.optDouble("leo_capacity"));
+                    rocket.setStageCount(jsonRocket.optInt("max_stage"));
 
                     upcomingLaunches.add(launch);
                   }
