@@ -49,4 +49,8 @@
     <item name="cardElevation">4dp</item>
     <item name="android:layout_margin">8dp</item>
   </style>
+  
+  <style name="actionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+    <item name="android:background">?attr/colorPrimary</item>
+  </style>
 </resources>
