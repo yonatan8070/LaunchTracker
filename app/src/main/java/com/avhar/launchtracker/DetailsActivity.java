@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.avhar.launchtracker.data.Launch;
@@ -54,6 +57,7 @@ public class DetailsActivity extends AppCompatActivity {
   private RequestQueue mQueue;
   private LaunchTelemetry telemetry;
   private String url = "https://api.launchdashboard.space/v2/launches?launch_library_2_id=7cea85fa-b373-4896-83ae-2629f4030806";
+  private Launch launch;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,7 @@ public class DetailsActivity extends AppCompatActivity {
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-    Launch launch = (Launch) getIntent().getSerializableExtra("launch");
+    launch = (Launch) getIntent().getSerializableExtra("launch");
     assert launch != null;
 
     boolean displayCountdown = getIntent().getBooleanExtra("displayCountdown", false);
@@ -172,12 +176,38 @@ public class DetailsActivity extends AppCompatActivity {
     TextView nameValue = rocketName.findViewById(R.id.value);
     nameLabel.setText("Name");
     nameValue.setText(rocket.getName());
+
+    requestImage();
   }
 
   @Override
   public boolean onSupportNavigateUp() {
     finish();
     return true;
+  }
+
+  private void requestImage() {
+    String url = launch.getRocket().getImage();
+    System.out.println(url);
+
+    ImageRequest request = new ImageRequest(url, new Response.Listener<Bitmap>() {
+      @Override
+      public void onResponse(Bitmap response) {
+        System.out.println("Response received from " + url);
+        ImageView imageView = findViewById(R.id.launchImage);
+
+        BitmapDrawable drawable = new BitmapDrawable(getResources(), response);
+
+        imageView.setBackground(drawable);
+      }
+    }, 0, 0, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
+      @Override
+      public void onErrorResponse(VolleyError error) {
+        error.printStackTrace();
+      }
+    });
+
+    mQueue.add(request);
   }
 
   private void loadTelemetry() {

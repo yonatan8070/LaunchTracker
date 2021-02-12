@@ -11,7 +11,6 @@ public class Rocket implements Serializable {
   private double lowEarthCapacity; // In Kilograms
   private int stageCount; // In number
   private int launchCost; // In USD
-
   private String image; // In URL
 
   public Rocket() {

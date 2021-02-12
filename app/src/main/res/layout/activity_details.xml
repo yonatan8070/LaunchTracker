@@ -6,15 +6,6 @@
   android:layout_height="match_parent"
   android:orientation="vertical">
   
-  <androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    android:elevation="4dp"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-  
   <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -31,6 +22,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rocketCard" />
+      
+      <androidx.cardview.widget.CardView
+        android:id="@+id/imageCard"
+        style="@style/Cards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chartCard">
+        
+        <ImageView
+          android:id="@+id/launchImage"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:background="@drawable/ic_loading_100"
+          android:contentDescription="Image of launch" />
+      
+      </androidx.cardview.widget.CardView>
       
       <androidx.cardview.widget.CardView
         android:id="@+id/chartCard"
@@ -240,7 +250,7 @@
         app:contentPadding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chartCard">
+        app:layout_constraintTop_toBottomOf="@id/imageCard">
         
         <androidx.constraintlayout.widget.ConstraintLayout
           android:layout_width="match_parent"
@@ -275,4 +285,13 @@
       </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
   </ScrollView>
+  
+  <androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    android:elevation="4dp"
+    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 </LinearLayout>

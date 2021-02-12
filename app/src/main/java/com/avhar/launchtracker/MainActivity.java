@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                     rocket.setDiameter(jsonRocket.optDouble("diameter"));
                     rocket.setLength(jsonRocket.optDouble("length"));
                     rocket.setName(jsonRocket.optString("full_name"));
-                    rocket.setImage(jsonRocket.optString("max_stage"));
+                    rocket.setImage(jsonRocket.optString("image_url"));
                     rocket.setMass(jsonRocket.optDouble("launch_mass"));
                     rocket.setLl2Id(jsonRocket.optInt("id"));
                     rocket.setLowEarthCapacity(jsonRocket.optDouble("leo_capacity"));
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                     rocket.setDiameter(jsonRocket.optDouble("diameter"));
                     rocket.setLength(jsonRocket.optDouble("length"));
                     rocket.setName(jsonRocket.optString("full_name"));
-                    rocket.setImage(jsonRocket.optString("max_stage"));
+                    rocket.setImage(jsonRocket.optString("image_url"));
                     rocket.setMass(jsonRocket.optDouble("launch_mass"));
                     rocket.setLl2Id(jsonRocket.optInt("id"));
                     rocket.setLowEarthCapacity(jsonRocket.optDouble("leo_capacity"));
