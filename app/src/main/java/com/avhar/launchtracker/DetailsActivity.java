@@ -2,6 +2,9 @@ package com.avhar.launchtracker;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -12,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,18 +49,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ActionMenuView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 public class DetailsActivity extends AppCompatActivity {
   private RequestQueue mQueue;
   private LaunchTelemetry telemetry;
-  private String url = "https://api.launchdashboard.space/v2/launches?launch_library_2_id=7cea85fa-b373-4896-83ae-2629f4030806";
+  private String url = "https://api.launchdashboard.space/v2/launches?launch_library_2_id=";
   private Launch launch;
 
   @Override
@@ -67,14 +73,14 @@ public class DetailsActivity extends AppCompatActivity {
 
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     launch = (Launch) getIntent().getSerializableExtra("launch");
     assert launch != null;
 
     boolean displayCountdown = getIntent().getBooleanExtra("displayCountdown", false);
 
-//    url += launch.getLl2Id();
+    url += launch.getLl2Id();
 
     ImageView loadingIcon = findViewById(R.id.loadingIcon);
     ((AnimationDrawable) loadingIcon.getBackground()).start();
@@ -187,6 +193,21 @@ public class DetailsActivity extends AppCompatActivity {
     System.out.println(rocket.getStageCount());
     rocketStages.setText(String.format(Locale.getDefault(), "%1$,.0f", (float) rocket.getStageCount()));
 
+    Button pinButton = findViewById(R.id.pinButton);
+    pinButton.setOnClickListener(v -> {
+      System.out.println("Doing nothing at all, not even wobbling.");
+
+      Intent serviceIntent = new Intent(this, CountdownService.class);
+      serviceIntent.putExtra("LaunchData", launch);
+      ContextCompat.startForegroundService(this, serviceIntent);
+    });
+
+    Button unpinButton = findViewById(R.id.unpinButton);
+    unpinButton.setOnClickListener(v -> {
+      Intent serviceIntent = new Intent(this, CountdownService.class);
+      stopService(serviceIntent);
+    });
+
     requestImage();
   }
 
@@ -256,6 +277,7 @@ public class DetailsActivity extends AppCompatActivity {
         TextView errorView = findViewById(R.id.errorText);
         if (error.networkResponse.statusCode == 404) {
           errorView.setText("Telemetry is not available for this launch");
+          findViewById(R.id.graphSelector).setVisibility(View.GONE);
         } else {
           errorView.setText("Error: " + error.networkResponse.statusCode);
         }

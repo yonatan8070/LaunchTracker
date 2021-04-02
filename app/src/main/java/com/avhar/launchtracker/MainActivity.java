@@ -37,13 +37,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
-  private RequestQueue mQueue;
+  private RequestQueue requestQueue;
   ArrayList<Launch> upcomingLaunches;
   ArrayList<Launch> previousLaunches;
   LaunchAdapter adapter;
   PreviousLaunchAdapter previousAdapter;
-  String upcomingUrl = "https://lldev.thespacedevs.com/2.1.0/launch/upcoming?mode=detailed";
-  String previousUrl = "https://lldev.thespacedevs.com/2.1.0/launch/previous?mode=detailed";
+  String upcomingUrl = "https://ll.thespacedevs.com/2.2.0/launch/upcoming?mode=detailed";
+  String previousUrl = "https://ll.thespacedevs.com/2.2.0/launch/previous?mode=detailed";
   boolean state = true; // True = upcoming, false = previous
   RecyclerView rvLaunches;
 
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    mQueue = Volley.newRequestQueue(this);
+    requestQueue = Volley.newRequestQueue(this);
     upcomingLaunches = new ArrayList<>();
     previousLaunches = new ArrayList<>();
 
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     long cacheTime = loadFromCache();
     long currentTime = new Date().getTime();
 
-    int cacheDelay = BuildConfig.DEBUG ? 0 : 900000;
+    int cacheDelay = 900000;
 
     if (currentTime - cacheTime > cacheDelay) {
       upcomingLaunches.clear();
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
-    mQueue.add(request);
+    requestQueue.add(request);
   }
 
   private void loadPrevious() {
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
-    mQueue.add(request);
+    requestQueue.add(request);
   }
 
   private void playLoadingIcon() {

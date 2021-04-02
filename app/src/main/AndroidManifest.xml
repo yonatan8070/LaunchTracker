@@ -15,16 +15,22 @@
       android:theme="@style/Theme.LaunchTracker">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
+        
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    
+  
     <activity
       android:name=".DetailsActivity"
-      android:theme="@style/Theme.LaunchTracker">
-    </activity>
+      android:theme="@style/Theme.LaunchTracker" />
+  
+    <service
+      android:name=".CountdownService"
+      android:enabled="true"
+      android:exported="true" />
   </application>
   
   <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
 </manifest>
