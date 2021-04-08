@@ -1,10 +1,6 @@
 package com.avhar.launchtracker;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -54,14 +50,12 @@ import java.util.Objects;
 
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ActionMenuView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 public class DetailsActivity extends AppCompatActivity {
-  private RequestQueue mQueue;
+  private RequestQueue requestQueue;
   private LaunchTelemetry telemetry;
   private String url = "https://api.launchdashboard.space/v2/launches?launch_library_2_id=";
   private Launch launch;
@@ -86,7 +80,7 @@ public class DetailsActivity extends AppCompatActivity {
     ImageView loadingIcon = findViewById(R.id.loadingIcon);
     ((AnimationDrawable) loadingIcon.getBackground()).start();
 
-    mQueue = Volley.newRequestQueue(this);
+    requestQueue = Volley.newRequestQueue(this);
     loadTelemetry();
 
     TextView launchName = findViewById(R.id.launchName);
@@ -237,16 +231,16 @@ public class DetailsActivity extends AppCompatActivity {
 
         BitmapDrawable drawable = new BitmapDrawable(getResources(), response);
 
-        imageView.setBackground(drawable);
+        imageView.setImageDrawable(drawable);
       }
-    }, 0, 0, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
+    }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError error) {
         error.printStackTrace();
       }
     });
 
-    mQueue.add(request);
+    requestQueue.add(request);
   }
 
   private void loadTelemetry() {
@@ -296,7 +290,7 @@ public class DetailsActivity extends AppCompatActivity {
         error.printStackTrace();
       }
     });
-    mQueue.add(request);
+    requestQueue.add(request);
   }
 
   private void displayChart() {

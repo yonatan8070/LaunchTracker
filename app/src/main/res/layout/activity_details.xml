@@ -7,14 +7,6 @@
   android:orientation="vertical">
   
   
-  <androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:elevation="4dp"
-    android:theme="@style/actionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-  
   <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -24,6 +16,28 @@
       android:layout_height="wrap_content"
       tools:context=".DetailsActivity">
       
+      <Button
+        android:id="@+id/pinButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Pin Launch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rocketCard" />
+      
+      <Button
+        android:id="@+id/unpinButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Unpin Launch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pinButton" />
+      
       <View
         android:id="@+id/view"
         android:layout_width="wrap_content"
@@ -31,6 +45,198 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rocketCard" />
+      
+      <androidx.cardview.widget.CardView
+        android:id="@+id/timeCard"
+        style="@style/Cards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        app:contentPadding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/missionCard">
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          
+          <TextView
+            android:id="@+id/countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?titleTextColor"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="T- 69 : 07 : 37 : 42" />
+          
+          <TextView
+            android:id="@+id/net"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/countdown"
+            tools:text="NET: 29/12/2020 at 14:06:38" />
+          
+          <TextView
+            android:id="@+id/windowStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/net"
+            tools:text="Window start: 29/12/2020 at 14:06:38" />
+          
+          <TextView
+            android:id="@+id/windowEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/windowStart"
+            tools:text="Window end: 29/12/2020 at 14:06:38" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+      </androidx.cardview.widget.CardView>
+      
+      <androidx.cardview.widget.CardView
+        android:id="@+id/rocketCard"
+        style="@style/Cards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentPadding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeCard">
+        
+        <TableLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:stretchColumns="1">
+          
+          <TableRow>
+            
+            <TextView
+              style="@style/PropertyTitle"
+              android:layout_width="96dp"
+              android:layout_height="wrap_content"
+              android:text="Name:" />
+            
+            <TextView
+              android:id="@+id/rocketName"
+              style="@style/PropertyValue"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              tools:text="Never gonna give you up" />
+          </TableRow>
+          
+          <TableRow>
+            
+            <TextView
+              style="@style/PropertyTitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Length:" />
+            
+            <TextView
+              android:id="@+id/rocketLength"
+              style="@style/PropertyValue"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              tools:text="Never gonna let you down" />
+          </TableRow>
+          
+          <TableRow>
+            
+            <TextView
+              style="@style/PropertyTitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Diameter:" />
+            
+            <TextView
+              android:id="@+id/rocketDiameter"
+              style="@style/PropertyValue"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              tools:text="Never gonna run around and desert you" />
+          </TableRow>
+          
+          <TableRow>
+            
+            <TextView
+              style="@style/PropertyTitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Mass:" />
+            
+            <TextView
+              android:id="@+id/rocketMass"
+              style="@style/PropertyValue"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              tools:text="Never gonna make you cry" />
+          </TableRow>
+          
+          <TableRow>
+            
+            <TextView
+              style="@style/PropertyTitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Stages:" />
+            
+            <TextView
+              android:id="@+id/rocketStages"
+              style="@style/PropertyValue"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              tools:text="Never gonna say goodbye" />
+          </TableRow>
+        </TableLayout>
+      </androidx.cardview.widget.CardView>
+      
+      <androidx.cardview.widget.CardView
+        android:id="@+id/missionCard"
+        style="@style/Cards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:contentPadding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageCard">
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+          
+          <TextView
+            android:id="@+id/launchName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?titleTextColor"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Falcon 9 Block 5 | Crew 1" />
+          
+          <TextView
+            android:id="@+id/launchProviderAndType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/launchName"
+            tools:text="SpaceX - Commercial" />
+          
+          <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/launchProviderAndType"
+            tools:text="This is a description \nIt can have multiple lines and stuff like that" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+      </androidx.cardview.widget.CardView>
       
       <androidx.cardview.widget.CardView
         android:id="@+id/imageCard"
@@ -46,7 +252,9 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:contentDescription="@string/image_of_launch" />
+          android:adjustViewBounds="true"
+          android:contentDescription="@string/image_of_launch"
+          android:scaleType="centerInside" />
       
       </androidx.cardview.widget.CardView>
       
@@ -128,220 +336,14 @@
           </com.google.android.material.tabs.TabLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
       </androidx.cardview.widget.CardView>
-      
-      <androidx.cardview.widget.CardView
-        android:id="@+id/timeCard"
-        style="@style/Cards"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        app:contentPadding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/missionCard">
-        
-        <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-          
-          <TextView
-            android:id="@+id/countdown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?titleTextColor"
-            android:textSize="36sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="T- 69 : 07 : 37 : 42" />
-          
-          <TextView
-            android:id="@+id/net"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/countdown"
-            tools:text="NET: 29/12/2020 at 14:06:38" />
-          
-          <TextView
-            android:id="@+id/windowStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/net"
-            tools:text="Window start: 29/12/2020 at 14:06:38" />
-          
-          <TextView
-            android:id="@+id/windowEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/windowStart"
-            tools:text="Window end: 29/12/2020 at 14:06:38" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-      </androidx.cardview.widget.CardView>
-      
-      <androidx.cardview.widget.CardView
-        android:id="@+id/rocketCard"
-        style="@style/Cards"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contentPadding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeCard">
-        
-        <TableLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:stretchColumns="1">
-          
-          <TableRow>
-            
-            <TextView
-              android:layout_width="96dp"
-              android:layout_height="wrap_content"
-              style="@style/PropertyTitle"
-              android:text="Name:" />
-            
-            <TextView
-              android:id="@+id/rocketName"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              style="@style/PropertyValue"
-              tools:text="Never gonna give you up" />
-          </TableRow>
-  
-          <TableRow>
-    
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              style="@style/PropertyTitle"
-              android:text="Length:" />
-    
-            <TextView
-              android:id="@+id/rocketLength"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              style="@style/PropertyValue"
-              tools:text="Never gonna let you down" />
-          </TableRow>
-  
-          <TableRow>
-    
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              style="@style/PropertyTitle"
-              android:text="Diameter:" />
-    
-            <TextView
-              android:id="@+id/rocketDiameter"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              style="@style/PropertyValue"
-              tools:text="Never gonna run around and desert you" />
-          </TableRow>
-  
-          <TableRow>
-    
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              style="@style/PropertyTitle"
-              android:text="Mass:" />
-    
-            <TextView
-              android:id="@+id/rocketMass"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              style="@style/PropertyValue"
-              tools:text="Never gonna make you cry" />
-          </TableRow>
-  
-          <TableRow>
-    
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              style="@style/PropertyTitle"
-              android:text="Stages:" />
-    
-            <TextView
-              android:id="@+id/rocketStages"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              style="@style/PropertyValue"
-              tools:text="Never gonna say goodbye" />
-          </TableRow>
-        </TableLayout>
-      </androidx.cardview.widget.CardView>
-      
-      <androidx.cardview.widget.CardView
-        android:id="@+id/missionCard"
-        style="@style/Cards"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:contentPadding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageCard">
-        
-        <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent">
-          
-          <TextView
-            android:id="@+id/launchName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?titleTextColor"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Falcon 9 Block 5 | Crew 1" />
-          
-          <TextView
-            android:id="@+id/launchProviderAndType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/launchName"
-            tools:text="SpaceX - Commercial" />
-          
-          <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/launchProviderAndType"
-            tools:text="This is a description \nIt can have multiple lines and stuff like that" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-      </androidx.cardview.widget.CardView>
-  
-      <Button
-        android:id="@+id/pinButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pin Launch"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rocketCard" />
-  
-      <Button
-        android:id="@+id/unpinButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Unpin Launch"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pinButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
   </ScrollView>
+  
+  <androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:elevation="4dp"
+    android:theme="@style/actionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 </LinearLayout>
