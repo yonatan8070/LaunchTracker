@@ -23,6 +23,8 @@ import androidx.core.app.NotificationCompat;
 public class CountdownService extends Service {
   private static final String CHANNEL_ID = "Countdown notifications";
   private boolean enabled;
+  Handler handler = new Handler();
+  Runnable notificationUpdater;
 
   public CountdownService() {
   }
@@ -53,8 +55,7 @@ public class CountdownService extends Service {
     NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     SimpleDateFormat countdownFormat = new SimpleDateFormat("'T-' DD : HH : mm : ss", Locale.getDefault());
 
-    Handler handler = new Handler();
-    handler.postDelayed(new Runnable() {
+    notificationUpdater = new Runnable() {
       @Override
       public void run() {
         long now = new Date().getTime();
@@ -77,7 +78,9 @@ public class CountdownService extends Service {
         notificationManager.notify(1, notificationUpdate);
         if (enabled) handler.postDelayed(this, 1000 - (now % 1000));
       }
-    }, 0);
+    };
+
+    handler.postDelayed(notificationUpdater, 0);
 
     return START_NOT_STICKY;
   }
@@ -86,6 +89,7 @@ public class CountdownService extends Service {
   public void onDestroy() {
     super.onDestroy();
     enabled = false;
+    handler.removeCallbacks(notificationUpdater);
   }
 
   @Nullable
