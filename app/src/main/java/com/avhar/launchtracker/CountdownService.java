@@ -13,6 +13,7 @@ import android.os.IBinder;
 import com.avhar.launchtracker.data.Launch;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.Locale;
 
@@ -59,9 +60,16 @@ public class CountdownService extends Service {
         long now = new Date().getTime();
         long timeUntilLaunch = launch.getNet().getTime() - now;
 
+        Duration duration = Duration.ofMillis(timeUntilLaunch);
+
         Notification notificationUpdate = new NotificationCompat.Builder(CountdownService.this, CHANNEL_ID)
                                                   .setContentTitle(launch.getName())
-                                                  .setContentText(countdownFormat.format(new Date(timeUntilLaunch + 1000)))
+                                                  .setContentText(String.format(Locale.getDefault(),
+                                                          "T- %02d : %02d : %02d : %02d",
+                                                          duration.getSeconds() / 86400,
+                                                          (duration.getSeconds() / 3600) % 24,
+                                                          (duration.getSeconds() % 3600) / 60,
+                                                          duration.getSeconds() % 60))
                                                   .setSmallIcon(R.drawable.ic_loading_120)
                                                   .setContentIntent(pendingIntent)
                                                   .build();
@@ -70,8 +78,7 @@ public class CountdownService extends Service {
         if (enabled) handler.postDelayed(this, 1000 - (now % 1000));
       }
     }, 0);
-    //do heavy work on a background thread
-    //stopSelf();
+
     return START_NOT_STICKY;
   }
 

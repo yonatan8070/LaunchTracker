@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
   ArrayList<Launch> previousLaunches;
   LaunchAdapter adapter;
   PreviousLaunchAdapter previousAdapter;
-  String upcomingUrl = "https://ll.thespacedevs.com/2.2.0/launch/upcoming?mode=detailed";
-  String previousUrl = "https://ll.thespacedevs.com/2.2.0/launch/previous?mode=detailed";
+  String upcomingUrl = "https://lldev.thespacedevs.com/2.2.0/launch/upcoming?mode=detailed&hide_recent_previous=true";
+  String previousUrl = "https://lldev.thespacedevs.com/2.2.0/launch/previous?mode=detailed&hide_recent_previous=true";
   boolean state = true; // True = upcoming, false = previous
   RecyclerView rvLaunches;
 
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     long cacheTime = loadFromCache();
     long currentTime = new Date().getTime();
 
-    int cacheDelay = 900000;
+    int cacheDelay = 0;// 900000;
 
     if (currentTime - cacheTime > cacheDelay) {
       upcomingLaunches.clear();

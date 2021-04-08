@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.avhar.launchtracker.data.Launch;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Period;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -88,7 +90,9 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
     netView.setText(format.format(launch.getNet()));
 
     TextView countdownView = holder.countdown;
-    SimpleDateFormat countdownFormat = new SimpleDateFormat("'T-' DD : HH : mm : ss", Locale.getDefault());
+
+    if (position == 1)
+      System.out.println("Net" + launch.getNet().toString());
 
     Handler handler = new Handler();
     handler.postDelayed(new Runnable() {
@@ -96,7 +100,15 @@ public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder
       public void run() {
         Date now = new Date();
         long timeUntilLaunch = launch.getNet().getTime() - now.getTime();
-        countdownView.setText(countdownFormat.format(new Date(timeUntilLaunch + 1000)));
+
+        Duration duration = Duration.ofMillis(timeUntilLaunch);
+
+        countdownView.setText(String.format(Locale.getDefault(),
+                "T- %02d : %02d : %02d : %02d",
+                duration.getSeconds() / 86400,
+                (duration.getSeconds() / 3600) % 24,
+                (duration.getSeconds() % 3600) / 60,
+                duration.getSeconds() % 60));
 
         handler.postDelayed(this, 1000 - (now.getTime() % 1000));
       }
