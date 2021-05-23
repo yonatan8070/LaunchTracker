@@ -94,8 +94,6 @@ public class DetailsActivity extends AppCompatActivity {
 
     TextView countdownView = findViewById(R.id.countdown);
     if (displayCountdown) {
-      SimpleDateFormat countdownFormat = new SimpleDateFormat("'T-' DD : HH : mm : ss", Locale.getDefault());
-
       Handler handler = new Handler();
       handler.postDelayed(new Runnable() {
         @Override
