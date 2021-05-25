@@ -38,14 +38,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
   private RequestQueue requestQueue;
-  ArrayList<Launch> upcomingLaunches;
-  ArrayList<Launch> previousLaunches;
-  LaunchAdapter adapter;
-  PreviousLaunchAdapter previousAdapter;
-  String upcomingUrl = "https://ll.thespacedevs.com/2.2.0/launch/upcoming?mode=detailed&hide_recent_previous=true";
-  String previousUrl = "https://ll.thespacedevs.com/2.2.0/launch/previous?mode=detailed&hide_recent_previous=true";
-  boolean state = true; // True = upcoming, false = previous
-  RecyclerView rvLaunches;
+  private ArrayList<Launch> upcomingLaunches;
+  private ArrayList<Launch> previousLaunches;
+  private LaunchAdapter adapter;
+  private PreviousLaunchAdapter previousAdapter;
+  private String upcomingUrl = "https://lldev.thespacedevs.com/2.2.0/launch/upcoming?mode=detailed&hide_recent_previous=true";
+  private String previousUrl = "https://lldev.thespacedevs.com/2.2.0/launch/previous?mode=detailed&hide_recent_previous=true";
+  private boolean state = true; // True = upcoming, false = previous
+  private RecyclerView rvLaunches;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

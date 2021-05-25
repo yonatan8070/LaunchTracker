@@ -57,7 +57,7 @@ import androidx.core.content.res.ResourcesCompat;
 public class DetailsActivity extends AppCompatActivity {
   private RequestQueue requestQueue;
   private LaunchTelemetry telemetry;
-  private String url = "https://api.launchdashboard.space/v2/launches?launch_library_2_id=";
+  private String url = "http://api.launchdashboard.space/v2/launches?launch_library_2_id=";
   private Launch launch;
 
   @Override
@@ -75,7 +75,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     boolean displayCountdown = getIntent().getBooleanExtra("displayCountdown", false);
 
-    url += launch.getLl2Id();
+//    url += launch.getLl2Id();
+    url += "7cea85fa-b373-4896-83ae-2629f4030806";
 
     ImageView loadingIcon = findViewById(R.id.loadingIcon);
     ((AnimationDrawable) loadingIcon.getBackground()).start();
@@ -278,12 +279,18 @@ public class DetailsActivity extends AppCompatActivity {
       @Override
       public void onErrorResponse(VolleyError error) {
         TextView errorView = findViewById(R.id.errorText);
-        if (error.networkResponse.statusCode == 404) {
-          errorView.setText("Telemetry is not available for this launch");
-          findViewById(R.id.graphSelector).setVisibility(View.GONE);
+        if (error.networkResponse != null) {
+          if (error.networkResponse.statusCode == 404) {
+            errorView.setText("Telemetry is not available for this launch");
+            findViewById(R.id.graphSelector).setVisibility(View.GONE);
+          } else {
+            errorView.setText("Error: " + error.networkResponse.statusCode);
+          }
         } else {
-          errorView.setText("Error: " + error.networkResponse.statusCode);
+          errorView.setText("Unknown error");
         }
+        System.out.println(error.toString());
+
         errorView.setVisibility(View.VISIBLE);
 
         findViewById(R.id.loadingIcon).setVisibility(View.INVISIBLE);
