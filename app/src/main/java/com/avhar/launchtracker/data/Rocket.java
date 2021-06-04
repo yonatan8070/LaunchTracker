@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public class Rocket implements Serializable {
   private int ll2Id;
-  private String name; // In text
-  private double length; // In meters
-  private double diameter; // In meters
-  private double mass; // In Kilograms
-  private double lowEarthCapacity; // In Kilograms
-  private int stageCount; // In number
-  private int launchCost; // In USD
-  private String image; // In URL
+  private String name;
+  private double length;
+  private double diameter;
+  private double mass;
+  private double lowEarthCapacity;
+  private int stageCount;
+  private int launchCost;
+  private String image;
 
   public Rocket() {
   }
