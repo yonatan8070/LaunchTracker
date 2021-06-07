@@ -53,7 +53,6 @@ public class CountdownService extends Service {
     startForeground(1, notification);
 
     NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-    SimpleDateFormat countdownFormat = new SimpleDateFormat("'T-' DD : HH : mm : ss", Locale.getDefault());
 
     notificationUpdater = new Runnable() {
       @Override

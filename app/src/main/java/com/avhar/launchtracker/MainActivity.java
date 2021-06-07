@@ -8,8 +8,6 @@ import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.avhar.launchtracker.data.Launch;
@@ -38,14 +36,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
   private RequestQueue requestQueue;
-  ArrayList<Launch> upcomingLaunches;
-  ArrayList<Launch> previousLaunches;
-  LaunchAdapter adapter;
-  PreviousLaunchAdapter previousAdapter;
-  String upcomingUrl = "https://ll.thespacedevs.com/2.2.0/launch/upcoming?mode=detailed&hide_recent_previous=true";
-  String previousUrl = "https://ll.thespacedevs.com/2.2.0/launch/previous?mode=detailed&hide_recent_previous=true";
-  boolean state = true; // True = upcoming, false = previous
-  RecyclerView rvLaunches;
+  private ArrayList<Launch> upcomingLaunches;
+  private ArrayList<Launch> previousLaunches;
+  private LaunchAdapter adapter;
+  private PreviousLaunchAdapter previousAdapter;
+  private String upcomingUrl = "https://ll.thespacedevs.com/2.2.0/launch/upcoming?mode=detailed&hide_recent_previous=true";
+  private String previousUrl = "https://ll.thespacedevs.com/2.2.0/launch/previous?mode=detailed&hide_recent_previous=true";
+  private RecyclerView rvLaunches;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +70,7 @@ public class MainActivity extends AppCompatActivity {
       public void onTabSelected(TabLayout.Tab tab) {
         if (tab.getPosition() == 0) {
           rvLaunches.setAdapter(adapter);
-          state = true;
         } else if (tab.getPosition() == 1) {
-          state = false;
           rvLaunches.setAdapter(previousAdapter);
           loadPrevious();
         }
@@ -112,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     long cacheTime = loadFromCache();
     long currentTime = new Date().getTime();
 
-    int cacheDelay = 0;// 900000;
+    int cacheDelay = 900000;
 
     if (currentTime - cacheTime > cacheDelay) {
       upcomingLaunches.clear();
@@ -126,66 +121,58 @@ public class MainActivity extends AppCompatActivity {
     playLoadingIcon();
 
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, upcomingUrl, null,
-            new Response.Listener<JSONObject>() {
-              @Override
-              public void onResponse(JSONObject response) {
-                System.out.println("Response received from " + upcomingUrl);
-                try {
-                  JSONArray results = response.getJSONArray("results");
+            response -> {
+              System.out.println("Response received from " + upcomingUrl);
+              try {
+                JSONArray results = response.getJSONArray("results");
 
-                  for (int i = 0; i < results.length(); i++) {
-                    JSONObject jsonLaunch = results.getJSONObject(i);
-                    Launch launch = new Launch();
+                for (int i = 0; i < results.length(); i++) {
+                  JSONObject jsonLaunch = results.getJSONObject(i);
+                  Launch launch = new Launch();
 
-                    launch.setLl2Id(jsonLaunch.optString("id"));
-                    launch.setName(jsonLaunch.optString("name"));
-                    launch.setProvider(jsonLaunch.getJSONObject("launch_service_provider").optString("name"));
-                    launch.setLaunchType(jsonLaunch.getJSONObject("launch_service_provider").optString("type"));
-                    launch.setStatus(jsonLaunch.getJSONObject("status").optInt("id"));
+                  launch.setLl2Id(jsonLaunch.optString("id"));
+                  launch.setName(jsonLaunch.optString("name"));
+                  launch.setProvider(jsonLaunch.getJSONObject("launch_service_provider").optString("name"));
+                  launch.setLaunchType(jsonLaunch.getJSONObject("launch_service_provider").optString("type"));
+                  launch.setStatus(jsonLaunch.getJSONObject("status").optInt("id"));
 
-                    SimpleDateFormat decoder = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
-                    decoder.setTimeZone(TimeZone.getTimeZone("Z"));
-                    launch.setNet(decoder.parse(jsonLaunch.optString("net")));
-                    launch.setWindowStart(decoder.parse(jsonLaunch.optString("window_start")));
-                    launch.setWindowEnd(decoder.parse(jsonLaunch.optString("window_end")));
+                  SimpleDateFormat decoder = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+                  decoder.setTimeZone(TimeZone.getTimeZone("Z"));
+                  launch.setNet(decoder.parse(jsonLaunch.optString("net")));
+                  launch.setWindowStart(decoder.parse(jsonLaunch.optString("window_start")));
+                  launch.setWindowEnd(decoder.parse(jsonLaunch.optString("window_end")));
 
-                    if (!jsonLaunch.isNull("mission")) {
-                      launch.setDescription(jsonLaunch.getJSONObject("mission").getString("description"));
-                    } else {
-                      launch.setDescription("Description unavailable");
-                    }
-
-                    Rocket rocket = launch.getRocket();
-                    JSONObject jsonRocket = jsonLaunch.getJSONObject("rocket").getJSONObject("configuration");
-
-                    rocket.setDiameter(jsonRocket.optDouble("diameter"));
-                    rocket.setLength(jsonRocket.optDouble("length"));
-                    rocket.setName(jsonRocket.optString("full_name"));
-                    rocket.setImage(jsonRocket.optString("image_url"));
-                    rocket.setMass(jsonRocket.optDouble("launch_mass"));
-                    rocket.setLl2Id(jsonRocket.optInt("id"));
-                    rocket.setLowEarthCapacity(jsonRocket.optDouble("leo_capacity"));
-                    rocket.setStageCount(jsonRocket.optInt("max_stage"));
-
-                    upcomingLaunches.add(launch);
+                  if (!jsonLaunch.isNull("mission")) {
+                    launch.setDescription(jsonLaunch.getJSONObject("mission").getString("description"));
+                  } else {
+                    launch.setDescription("Description unavailable");
                   }
 
-                  upcomingUrl = response.getString("next");
-                  stopLoadingIcon();
-                  updateCache();
-                } catch (JSONException | ParseException e) {
-                  e.printStackTrace();
+                  Rocket rocket = launch.getRocket();
+                  JSONObject jsonRocket = jsonLaunch.getJSONObject("rocket").getJSONObject("configuration");
+
+                  rocket.setDiameter(jsonRocket.optDouble("diameter"));
+                  rocket.setLength(jsonRocket.optDouble("length"));
+                  rocket.setName(jsonRocket.optString("full_name"));
+                  rocket.setImage(jsonRocket.optString("image_url"));
+                  rocket.setMass(jsonRocket.optDouble("launch_mass"));
+                  rocket.setLl2Id(jsonRocket.optInt("id"));
+                  rocket.setLowEarthCapacity(jsonRocket.optDouble("leo_capacity"));
+                  rocket.setStageCount(jsonRocket.optInt("max_stage"));
+
+                  upcomingLaunches.add(launch);
                 }
 
-                adapter.notifyDataSetChanged();
-                rvLaunches.scheduleLayoutAnimation();
+                upcomingUrl = response.getString("next");
+                stopLoadingIcon();
+                updateCache();
+              } catch (JSONException | ParseException e) {
+                e.printStackTrace();
               }
-            }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError error) {
-        error.printStackTrace();
-      }
-    });
+
+              adapter.notifyDataSetChanged();
+              rvLaunches.scheduleLayoutAnimation();
+            }, Throwable::printStackTrace);
 
     requestQueue.add(request);
   }
@@ -194,65 +181,57 @@ public class MainActivity extends AppCompatActivity {
     playLoadingIcon();
 
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, previousUrl, null,
-            new Response.Listener<JSONObject>() {
-              @Override
-              public void onResponse(JSONObject response) {
-                System.out.println("Response received from " + previousUrl);
-                try {
-                  JSONArray results = response.getJSONArray("results");
+            response -> {
+              System.out.println("Response received from " + previousUrl);
+              try {
+                JSONArray results = response.getJSONArray("results");
 
-                  for (int i = 0; i < results.length(); i++) {
-                    JSONObject jsonLaunch = results.getJSONObject(i);
-                    Launch launch = new Launch();
+                for (int i = 0; i < results.length(); i++) {
+                  JSONObject jsonLaunch = results.getJSONObject(i);
+                  Launch launch = new Launch();
 
-                    launch.setLl2Id(jsonLaunch.optString("id"));
-                    launch.setName(jsonLaunch.optString("name"));
-                    launch.setProvider(jsonLaunch.getJSONObject("launch_service_provider").optString("name"));
-                    launch.setLaunchType(jsonLaunch.getJSONObject("launch_service_provider").optString("type"));
-                    launch.setStatus(jsonLaunch.getJSONObject("status").optInt("id"));
+                  launch.setLl2Id(jsonLaunch.optString("id"));
+                  launch.setName(jsonLaunch.optString("name"));
+                  launch.setProvider(jsonLaunch.getJSONObject("launch_service_provider").optString("name"));
+                  launch.setLaunchType(jsonLaunch.getJSONObject("launch_service_provider").optString("type"));
+                  launch.setStatus(jsonLaunch.getJSONObject("status").optInt("id"));
 
-                    SimpleDateFormat decoder = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
-                    decoder.setTimeZone(TimeZone.getTimeZone("Z"));
-                    launch.setNet(decoder.parse(jsonLaunch.optString("net")));
-                    launch.setWindowStart(decoder.parse(jsonLaunch.optString("window_start")));
-                    launch.setWindowEnd(decoder.parse(jsonLaunch.optString("window_end")));
+                  SimpleDateFormat decoder = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+                  decoder.setTimeZone(TimeZone.getTimeZone("Z"));
+                  launch.setNet(decoder.parse(jsonLaunch.optString("net")));
+                  launch.setWindowStart(decoder.parse(jsonLaunch.optString("window_start")));
+                  launch.setWindowEnd(decoder.parse(jsonLaunch.optString("window_end")));
 
-                    if (!jsonLaunch.isNull("mission")) {
-                      launch.setDescription(jsonLaunch.getJSONObject("mission").getString("description"));
-                    } else {
-                      launch.setDescription("Description unavailable");
-                    }
-
-                    Rocket rocket = launch.getRocket();
-                    JSONObject jsonRocket = jsonLaunch.getJSONObject("rocket").getJSONObject("configuration");
-
-                    rocket.setDiameter(jsonRocket.optDouble("diameter"));
-                    rocket.setLength(jsonRocket.optDouble("length"));
-                    rocket.setName(jsonRocket.optString("full_name"));
-                    rocket.setImage(jsonRocket.optString("image_url"));
-                    rocket.setMass(jsonRocket.optDouble("launch_mass"));
-                    rocket.setLl2Id(jsonRocket.optInt("id"));
-                    rocket.setLowEarthCapacity(jsonRocket.optDouble("leo_capacity"));
-
-                    previousLaunches.add(launch);
+                  if (!jsonLaunch.isNull("mission")) {
+                    launch.setDescription(jsonLaunch.getJSONObject("mission").getString("description"));
+                  } else {
+                    launch.setDescription("Description unavailable");
                   }
 
-                  previousUrl = response.getString("next");
-                  stopLoadingIcon();
-                  updateCache();
-                } catch (JSONException | ParseException e) {
-                  e.printStackTrace();
+                  Rocket rocket = launch.getRocket();
+                  JSONObject jsonRocket = jsonLaunch.getJSONObject("rocket").getJSONObject("configuration");
+
+                  rocket.setDiameter(jsonRocket.optDouble("diameter"));
+                  rocket.setLength(jsonRocket.optDouble("length"));
+                  rocket.setName(jsonRocket.optString("full_name"));
+                  rocket.setImage(jsonRocket.optString("image_url"));
+                  rocket.setMass(jsonRocket.optDouble("launch_mass"));
+                  rocket.setLl2Id(jsonRocket.optInt("id"));
+                  rocket.setLowEarthCapacity(jsonRocket.optDouble("leo_capacity"));
+
+                  previousLaunches.add(launch);
                 }
 
-                previousAdapter.notifyDataSetChanged();
-                rvLaunches.scheduleLayoutAnimation();
+                previousUrl = response.getString("next");
+                stopLoadingIcon();
+                updateCache();
+              } catch (JSONException | ParseException e) {
+                e.printStackTrace();
               }
-            }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError error) {
-        error.printStackTrace();
-      }
-    });
+
+              previousAdapter.notifyDataSetChanged();
+              rvLaunches.scheduleLayoutAnimation();
+            }, Throwable::printStackTrace);
 
     requestQueue.add(request);
   }
@@ -298,7 +277,11 @@ public class MainActivity extends AppCompatActivity {
       dateStream = this.openFileInput("date");
       ObjectInputStream is = new ObjectInputStream(fis);
       ObjectInputStream dateInput = new ObjectInputStream(dateStream);
-      upcomingLaunches = (ArrayList<Launch>) is.readObject();
+      try {
+        upcomingLaunches = (ArrayList<Launch>) is.readObject();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       Date date = (Date) dateInput.readObject();
       time = date.getTime();
       is.close();
